@@ -1,10 +1,16 @@
 package SauceDemo2.SauceDemo2;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+
+
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -19,7 +25,21 @@ public class AppTest {
 	    public void setUp() {
 
 	        // Launch Chrome
-	        driver = new ChromeDriver();
+	        FirefoxOptions options = new FirefoxOptions();
+
+	        options.addArguments("--headless");
+	        options.addArguments("--width=1920");
+	        options.addArguments("--height=1080");
+
+	        try {
+	            driver = new RemoteWebDriver(
+	                    new URL("http://selenium:4444"),
+	                    options
+	            );
+	        } catch (MalformedURLException e) {
+	            e.printStackTrace();
+	        }
+
 
 	        // Maximize browser
 	        driver.manage().window().maximize();
@@ -149,8 +169,9 @@ public class AppTest {
 	        // =========================
 
 	        String successMessage =
-	                driver.findElement(
-	                        By.className("complete-header"))
+	                wait.until(
+	                        ExpectedConditions.visibilityOfElementLocated(
+	                                By.className("complete-header")))
 	                .getText();
 
 	        Assert.assertEquals(
