@@ -10,6 +10,14 @@ pipeline {
             }
         }
 
+        
+        stage('Docker Check') {
+            steps {
+                bat 'docker --version'
+                bat 'docker compose version'
+            }
+        }
+
         stage('Docker Build') {
             steps {
                 bat 'docker compose build'
