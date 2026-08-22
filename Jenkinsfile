@@ -10,30 +10,29 @@ pipeline {
             }
         }
 
-        
         stage('Docker Check') {
             steps {
                 bat 'docker --version'
-                bat 'docker compose version'
+                bat '"C:\\Users\\rasmi\\.docker\\cli-plugins\\docker-compose.exe" version'
             }
         }
 
         stage('Docker Build') {
             steps {
-                bat 'docker compose build'
+                bat '"C:\\Users\\rasmi\\.docker\\cli-plugins\\docker-compose.exe" build'
             }
         }
 
         stage('Run Selenium Tests') {
             steps {
-                bat 'docker compose up --abort-on-container-exit'
+                bat '"C:\\Users\\rasmi\\.docker\\cli-plugins\\docker-compose.exe" up --abort-on-container-exit'
             }
         }
     }
 
     post {
         always {
-            bat 'docker compose down'
+            bat '"C:\\Users\\rasmi\\.docker\\cli-plugins\\docker-compose.exe" down'
         }
     }
 }
