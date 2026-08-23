@@ -10,6 +10,12 @@ pipeline {
             }
         }
 
+        stage('Clean Previous Reports') {
+            steps {
+                bat 'if exist test-output rmdir /s /q test-output'
+            }
+        }
+
         stage('Docker Check') {
             steps {
                 bat 'docker --version'
