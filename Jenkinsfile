@@ -35,6 +35,11 @@ pipeline {
             }
         }
     }
+    stage('Check Test Report') {
+    steps {
+        bat 'dir test-output'
+    }
+}
 
      post {
 
