@@ -34,14 +34,29 @@ pipeline {
                 bat '"C:\\Users\\rasmi\\.docker\\cli-plugins\\docker-compose.exe" up --abort-on-container-exit'
             }
         }
-    }
-    stage('Check Test Report') {
-    steps {
-        bat 'dir test-output'
-    }
-}
 
-     post {
+        stage('Check Test Report') {
+            steps {
+                bat '''
+                echo ===== test-output =====
+                if exist test-output (
+                    dir /s test-output
+                ) else (
+                    echo test-output folder NOT FOUND
+                )
+
+                echo ===== target/surefire-reports =====
+                if exist target\\surefire-reports (
+                    dir /s target\\surefire-reports
+                ) else (
+                    echo target\\surefire-reports NOT FOUND
+                )
+                '''
+            }
+        }
+    }
+
+    post {
 
         always {
 
