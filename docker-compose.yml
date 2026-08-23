@@ -18,6 +18,9 @@ services:
     build: .
     container_name: saucedemo-tests
 
+      volumes:
+        - ./test-output:/app/test-output
+
     depends_on:
       selenium:
         condition: service_healthy
