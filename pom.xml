@@ -63,7 +63,14 @@
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
+                          <properties>
+                     <property>
+                         <name>usedefaultlisteners</name>
+                         <value>true</value>
+                     </property>
+                 </properties>
 
+                            
                 </configuration>
 
             </plugin>
