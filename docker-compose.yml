@@ -7,8 +7,17 @@ services:
       - "4444:4444"
     shm_size: "2gb"
 
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4444/status"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
   tests:
     build: .
     container_name: saucedemo-tests
+
     depends_on:
-      - selenium
+      selenium:
+        condition: service_healthy
