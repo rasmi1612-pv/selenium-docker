@@ -30,9 +30,31 @@ pipeline {
         }
     }
 
-    post {
+     post {
+
         always {
+
             bat '"C:\\Users\\rasmi\\.docker\\cli-plugins\\docker-compose.exe" down'
+
+            archiveArtifacts artifacts: 'test-output/**/*',
+                             allowEmptyArchive: true
+
+            publishHTML([
+                allowMissing: true,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'test-output',
+                reportFiles: 'index.html',
+                reportName: 'Selenium TestNG Report'
+            ])
+        }
+
+        success {
+            echo 'Selenium tests completed successfully.'
+        }
+
+        failure {
+            echo 'Selenium tests failed. Check the report.'
         }
     }
 }
